@@ -1,6 +1,6 @@
 /* @flow */
 
-import React from 'react';
+import * as React from 'react';
 import { PropTypes, Component } from '../../libs';
 import { require_condition } from '../../libs/utils';
 import Node from './Node';
@@ -31,7 +31,7 @@ export default class Tree extends Component {
   }
 
   componentWillReceiveProps(nextProps: Object): void {
-    if (nextProps.data instanceof Array) {
+    if (nextProps.data instanceof Array && this.props.data !== nextProps.data) {
       this.root.setData(nextProps.data);
       this.setState({}); //force update
     }
