@@ -92,7 +92,7 @@ class Select extends Component {
       this.onInputChange();
     });
 
-    this.resetInputWidth = this._resetInputWidth.bind(this) 
+    this.resetInputWidth = this._resetInputWidth.bind(this)
   }
 
   getChildContext(): Object {
@@ -818,7 +818,7 @@ class Select extends Component {
   }
 
   render() {
-    const { multiple, size, disabled, filterable, loading } = this.props;
+    const { multiple, size, disabled, filterable, loading, name } = this.props;
     const { selected, inputWidth, inputLength, query, selectedLabel, visible, options, filteredOptionsCount, currentPlaceholder } = this.state;
 
     return (
@@ -899,7 +899,7 @@ class Select extends Component {
           value={selectedLabel}
           type="text"
           placeholder={currentPlaceholder}
-          name="name"
+          name={name}
           size={size}
           disabled={disabled}
           readOnly={!filterable || multiple}

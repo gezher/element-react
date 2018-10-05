@@ -1,11 +1,12 @@
 {
   "name": "@yncoder/element-react",
-  "version": "1.4.21",
+  "version": "1.4.22",
   "description": "Element UI for React",
   "private": false,
   "main": "dist/npm/es5/index.js",
   "jsnext:main": "next.js",
   "typings": "typings/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "start": "cd site && node run.js",
     "typescript-test": "tsc --project typings/typing-tests",
@@ -88,8 +89,8 @@
     "throttle-debounce": "^1.0.1"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+    "react": ">=16.3.0",
+    "react-dom": ">=16.3.0"
   },
   "jest": {
     "testRegex": "(/jest/.+\\.(js|jsx)$)|_test.jsx?$",
