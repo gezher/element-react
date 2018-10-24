@@ -18,7 +18,6 @@ class Component extends React.Component<{}, {}> {
           firstDayOfWeek={2}
           isShowTime={true}
           onChange={date => {
-            console.debug('DatePicker1 changed: ', date)
             this.setState({ value1: date })
           }}
           disabledDate={(time) => time.getTime() < Date.now() - 8.64e7}
@@ -32,7 +31,6 @@ class Component extends React.Component<{}, {}> {
           disabledDate={(time, type) => time.getTime() < Date.now() - 8.64e7}
           firstDayOfWeek={2}
           onChange={date => {
-            console.debug('DateRangePicker2 changed: ', date)
             this.setState({ value2: date })
           }}
           shortcuts={[{
