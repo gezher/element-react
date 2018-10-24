@@ -1,5 +1,8 @@
 declare module 'popper.js' {
-  declare var exports: any
+  declare class Popper {
+    constructor(reference: any, popper: any, options: any): void;
+  }
+  declare export default typeof Popper;
 }
 
 declare module 'classnames' {
