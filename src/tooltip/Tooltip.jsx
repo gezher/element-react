@@ -1,6 +1,6 @@
 /* @flow */
 
-import React from 'react';
+import * as React from 'react';
 import Popper from 'popper.js';
 import { Component, PropTypes, Transition, View } from '../../libs';
 
@@ -87,7 +87,7 @@ export default class Tooltip extends Component {
               <View show={this.state.showPopper} >
                 <div ref="popper" className={ this.classNames("el-tooltip__popper", `is-${effect}`) }>
                   <div>{ content }</div>
-                  { visibleArrow && <div ref="arrow" className="popper__arrow"/> }
+                  { visibleArrow && <div ref="arrow" className="popper__arrow" /> }
                 </div>
               </View>
             </Transition>
