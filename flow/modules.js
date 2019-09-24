@@ -1,8 +1,5 @@
 declare module 'popper.js' {
-  declare class Popper {
-    constructor(reference: any, popper: any, options: any): void;
-  }
-  declare export default typeof Popper;
+  declare export default any;
 }
 
 declare module 'classnames' {
@@ -10,21 +7,14 @@ declare module 'classnames' {
 }
 
 declare module 'react-click-outside' {
-  declare export default function enhanceWithClickOutside(module: any): any
+  declare module.exports: any;
 }
 
-declare module 'throttle-debounce/throttle' {
-  declare export default function throttle(...args: Array<any>): any
-}
-
-declare module 'throttle-debounce/debounce' {
-  declare export default function debounce(...args: Array<any>): any
+declare module 'throttle-debounce' {
+  declare var debounce: any;
+  declare var throttle: any;
 }
 
 declare module 'async-validator' {
-  declare class AsyncValidator {
-    constructor(options: Object): void;
-    validate(...args: Array<any>): void;
-  }
-  declare export default typeof AsyncValidator;
+  declare export default any;
 }

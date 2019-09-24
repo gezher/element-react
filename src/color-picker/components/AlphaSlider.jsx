@@ -111,7 +111,7 @@ export default class AlphaSlider extends Component {
     });
   }
 
-  render(): React.Element<any> {
+  render(): React.DOM {
     const { vertical } = this.props;
     const { thumbLeft, thumbTop, background } = this.state;
     return (

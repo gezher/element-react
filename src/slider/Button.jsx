@@ -167,7 +167,7 @@ export default class SliderButton extends Component {
     return this.props.vertical ? { bottom: this.currentPosition() } : { left: this.currentPosition() };
   }
 
-  render(): React.Element<any> {
+  render(): React.DOM {
     const { hovering, dragging } = this.state;
 
     return (
@@ -181,7 +181,8 @@ export default class SliderButton extends Component {
         onMouseEnter={this.handleMouseEnter.bind(this)}
         onMouseLeave={this.handleMouseLeave.bind(this)}
         onMouseDown={this.onButtonDown.bind(this)}>
-        <Tooltip ref="tooltip" placement="top" content={<span>{this.formatValue()}</span>} disabled={!this.parent().props.showTooltip}>
+        <Tooltip ref="tooltip" placement="top" content={<span>{this.formatValue()}</span>}
+                 disabled={!this.parent().props.showTooltip}>
           <div className={this.classNames('el-slider__button', {
             'hover': this.state.hovering,
             'dragging': this.state.dragging

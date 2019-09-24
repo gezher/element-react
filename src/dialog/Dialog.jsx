@@ -51,7 +51,7 @@ export default class Dialog extends Component {
   }
 
   componentDidUpdate(prevProps: Object): void {
-    if (this.willOpen(prevProps, this.props)){
+    if (this.willOpen(prevProps, this.props)) {
       this.refs.wrap.focus();
     }
   }

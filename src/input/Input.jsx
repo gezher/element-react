@@ -66,13 +66,14 @@ export default class Input extends Component {
 
   handleFocus(e: SyntheticEvent<HTMLInputElement | HTMLTextAreaElement>): void {
     const { onFocus } = this.props;
-    if (onFocus) onFocus(e)
+    if (onFocus) onFocus(e);
   }
 
   handleBlur(e: SyntheticEvent<HTMLInputElement | HTMLTextAreaElement>): void {
     const { onBlur } = this.props;
-    if (this.props.trim) this.handleTrim()
-    if (onBlur) onBlur(e)
+
+    if (this.props.trim) this.handleTrim();
+    if (onBlur) onBlur(e);
   }
 
   handleTrim(): void {
@@ -105,7 +106,7 @@ export default class Input extends Component {
     });
   }
 
-  render(): React.Element<any> {
+  render(): React.DOM {
     const { type, size, prepend, append, icon, autoComplete, validating, rows, onMouseEnter, onMouseLeave, trim,
       ...otherProps
     } = this.props;

@@ -109,7 +109,7 @@ export default class TableBody extends Component<TableBodyProps> {
     this.context.store.setCurrentRow(row);
   }
 
-  renderCell(row: Object, column: _Column, index: number, rowKey: string | number): React.Element<any> {
+  renderCell(row: Object, column: _Column, index: number, rowKey: string | number): React.DOM {
     const { type, selectable } = column;
     if (type === 'expand') {
       return (

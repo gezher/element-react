@@ -159,7 +159,7 @@ export default class TransferPanel extends Component {
     return this.props.propsAlias.disabled;
   }
 
-  render(): React.Element<any> {
+  render(): React.DOM {
     const {
       filterable,
       title,

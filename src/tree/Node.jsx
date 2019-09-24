@@ -1,7 +1,7 @@
 /* @flow */
 
-import * as React from 'react';
-import debounce from 'throttle-debounce/debounce';
+import React from 'react';
+import { debounce } from 'throttle-debounce';
 
 import { PropTypes, Component, CollapseTransition } from '../../libs';
 import { watchPropertyChange, IDGenerator } from '../../libs/utils';
@@ -120,17 +120,16 @@ export default class Node extends Component {
   }
 
   getNodeKey(node: any, otherwise: number) {
-    const nodeKey = this.props.nodeKey;
+    const { nodeKey } = this.props;
     if (nodeKey && node) {
       return node.data[nodeKey];
     }
     return otherwise;
   }
 
-
   handleClick(evt: ?SyntheticEvent<HTMLDivElement>): void {
     if (evt) evt.stopPropagation();
-    const { nodeModel, treeNode } = this.props;
+    const { treeNode } = this.props;
 
     treeNode.setCurrentNode(this);
     if (treeNode.props.expandOnClickNode){
@@ -184,7 +183,7 @@ export default class Node extends Component {
     this.props.nodeModel.setChecked(checked, true);
   }
 
-  render(): React.Element<any> {
+  render(): React.DOM {
     const { childNodeRendered } = this.state;
     const { treeNode, nodeModel, renderContent, isShowCheckbox } = this.props;
 

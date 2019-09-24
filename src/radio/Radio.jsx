@@ -57,7 +57,7 @@ export default class Radio extends Component {
     return props.model == props.value || Boolean(props.checked)
   }
 
-  render(): React.Element<any> {
+  render(): React.DOM {
     const { checked, focus } = this.state;
     const { disabled, value, children } = this.props;
 

@@ -54,7 +54,7 @@ export default class MessageBox extends Component {
   }
 
   typeClass(): string {
-    return this.props.type && typeMap[this.props.type] && `el-icon-${ typeMap[this.props.type] }`;
+    return this.props.type && typeMap[this.props.type] && `el-icon-${typeMap[this.props.type]}`;
   }
 
   validate(value: string): boolean {
@@ -121,8 +121,8 @@ export default class MessageBox extends Component {
     });
   }
 
-  render(): React.Element<any> {
-    const { willUnmount, title, showClose, message, showInput, inputPlaceholder, showCancelButton, cancelButtonClass, showConfirmButton, confirmButtonClass, inputType } = this.props;
+  render(): React.DOM {
+    const { willUnmount, title, showClose, message, showInput, inputPlaceholder, showCancelButton, cancelButtonClass, showConfirmButton, confirmButtonClass, customClass, inputType } = this.props;
     const { visible, editorErrorMessage } = this.state;
 
     return (
@@ -138,7 +138,7 @@ export default class MessageBox extends Component {
             onAfterLeave={() => { willUnmount && willUnmount() }}
           >
             <View show={visible}>
-              <div className="el-message-box__wrapper">
+              <div className={this.classNames('el-message-box__wrapper', customClass)}>
                 <div className="el-message-box">
                   {
                     title && (
@@ -157,9 +157,9 @@ export default class MessageBox extends Component {
                   {
                     message && (
                       <div className="el-message-box__content">
-                        <div className={this.classNames('el-message-box__status', this.typeClass())}></div>
+                        <div className={this.classNames('el-message-box__status', this.typeClass())} />
                         <div className="el-message-box__message" style={{ marginLeft: this.typeClass() ? '50px' : '0' }}>
-                          <p>{message}</p>
+                          <div>{message}</div>
                         </div>
                         <View show={showInput}>
                           <div className="el-message-box__input">
@@ -211,6 +211,7 @@ MessageBox.propTypes = {
   cancelButtonText: PropTypes.string,
   cancelButtonClass: PropTypes.string,
   confirmButtonClass: PropTypes.string,
+  customClass: PropTypes.string,
   inputPlaceholder: PropTypes.string,
   inputPattern: PropTypes.regex,
   inputValidator: PropTypes.func,
@@ -223,6 +224,8 @@ MessageBox.propTypes = {
 
 MessageBox.defaultProps = {
   title: '提示',
+  showInput: false,
   showClose: true,
+  showCancelButton: false,
   showConfirmButton: true
 }

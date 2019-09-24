@@ -1182,17 +1182,36 @@ constructor(props) {
   }
 }
 
+toggleSelection(rows) {
+  if (rows) {
+    rows.forEach(row => {
+      this.refs.multipleTable.toggleRowSelection(row);
+    });
+  } else {
+    this.refs.multipleTable.clearSelection();
+  }
+}
+
 render() {
+  const { columns, data } = this.state;
+
   return (
-    <Table
-      style={{width: '100%'}}
-      columns={this.state.columns}
-      data={this.state.data}
-      border={true}
-      height={250}
-      onSelectChange={(selection) => { console.log(selection) }}
-      onSelectAll={(selection) => { console.log(selection) }}
-    />
+    <div>
+      <Table
+        ref="multipleTable"
+        style={{width: '100%'}}
+        columns={columns}
+        data={data}
+        border={true}
+        height={250}
+        onSelectChange={(selection) => { console.log(selection) }}
+        onSelectAll={(selection) => { console.log(selection) }}
+      />
+      <div style={{marginTop: '20px'}}>
+        <Button onClick={() => this.toggleSelection([ data[1], data[2] ])}>切换第二、第三行的选中状态</Button>
+        <Button onClick={() => this.toggleSelection()}>取消选择</Button>
+      </div>
+    </div>
   )
 }
 ```
@@ -1219,7 +1238,7 @@ constructor(props) {
         label: "姓名",
         prop: "name",
         width: 180,
-        sortable: true
+        sortable: 'custom'
       },
       {
         label: "地址",
@@ -1228,24 +1247,29 @@ constructor(props) {
     ],
     data: [{
       date: '2016-05-02',
-      name: '王小虎',
+      name: '赵小虎',
       address: '上海市普陀区金沙江路 1518 弄'
     }, {
       date: '2016-05-04',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1517 弄'
+      name: '钱小虎',
+      address: '上海市普陀区金沙江路 1518 弄'
     }, {
       date: '2016-05-01',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1519 弄'
+      name: '孙小虎',
+      address: '上海市普陀区金沙江路 1518 弄'
     }, {
       date: '2016-05-03',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1516 弄'
+      name: '李小虎',
+      address: '上海市普陀区金沙江路 1518 弄'
     }]
   }
 }
-
+handleSort(data){
+  console.log('自定义');
+  console.log(data.column);
+  console.log(data.prop);
+  console.log(data.order);
+}
 render() {
   return (
     <Table
@@ -1253,6 +1277,7 @@ render() {
       columns={this.state.columns}
       data={this.state.data}
       border={true}
+      onSortChange={this.handleSort.bind(this)}
     />
   )
 }
