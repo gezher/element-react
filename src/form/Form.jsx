@@ -18,17 +18,6 @@ export default class Form extends Component {
     }
   }
 
-  componentDidUpdate(newProps: Object): void {
-    const {model} = newProps
-    const oldModel = this.props.model
-    if (!model) return
-    const diff = Object.keys(model).filter(key => model[key] !== oldModel[key])
-    if (diff.length) {
-      this.state.fields.filter(({props}) => props.prop.match(diff))
-        .map(field => field.validate('', () => undefined));
-    }
-  }
-
   getChildContext(): { component: Form } {
     return {
       component: this
@@ -80,7 +69,7 @@ export default class Form extends Component {
     field.validate('', cb);
   }
 
-  render(): React.Element<any> {
+  render(): React.DOM {
     return (
       <form style={this.style()} className={this.className('el-form', this.props.labelPosition && `el-form--label-${this.props.labelPosition}`, {
         'el-form--inline': this.props.inline

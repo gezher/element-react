@@ -135,7 +135,7 @@ export default class Transfer extends Component {
     return data.filter(item => value.includes(item[propsAlias.key]));
   }
 
-  render(): React.Element<any> {
+  render(): React.DOM {
     const {
       filterPlaceholder,
       titles,

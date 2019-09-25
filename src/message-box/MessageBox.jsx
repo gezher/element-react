@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { Component, PropTypes, Transition, View } from '../../libs';
+import { cleanScrollBar } from '../table/utils';
 import Button from '../button';
 import Input from '../input';
 import i18n from '../locale';
@@ -32,9 +33,8 @@ export default class MessageBox extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      visible: true
-    })
+    cleanScrollBar()
+    this.setState({ visible: true });
     document.activeElement && document.activeElement.blur()
   }
 
@@ -54,7 +54,7 @@ export default class MessageBox extends Component {
   }
 
   typeClass(): string {
-    return this.props.type && typeMap[this.props.type] && `el-icon-${ typeMap[this.props.type] }`;
+    return this.props.type && typeMap[this.props.type] && `el-icon-${typeMap[this.props.type]}`;
   }
 
   validate(value: string): boolean {
@@ -121,8 +121,8 @@ export default class MessageBox extends Component {
     });
   }
 
-  render(): React.Element<any> {
-    const { willUnmount, title, showClose, message, showInput, inputPlaceholder, showCancelButton, cancelButtonClass, showConfirmButton, confirmButtonClass, inputType } = this.props;
+  render(): React.DOM {
+    const { willUnmount, title, showClose, message, showInput, inputPlaceholder, showCancelButton, cancelButtonClass, showConfirmButton, confirmButtonClass, customClass, inputType } = this.props;
     const { visible, editorErrorMessage } = this.state;
 
     return (
@@ -135,10 +135,12 @@ export default class MessageBox extends Component {
         <div style={{ position: 'absolute' }}>
           <Transition
             name="msgbox-fade"
-            onAfterLeave={() => { willUnmount && willUnmount() }}
+            onAfterLeave={() => {
+              willUnmount && willUnmount()
+            }}
           >
             <View show={visible}>
-              <div className="el-message-box__wrapper">
+              <div className={this.classNames('el-message-box__wrapper', customClass)}>
                 <div className="el-message-box">
                   {
                     title && (
@@ -146,7 +148,8 @@ export default class MessageBox extends Component {
                         <div className="el-message-box__title">{title}</div>
                         {
                           showClose && (
-                            <button type="button" className="el-message-box__headerbtn" aria-label="Close" onClick={this.handleAction.bind(this, 'cancel')}>
+                            <button type="button" className="el-message-box__headerbtn" aria-label="Close"
+                                    onClick={this.handleAction.bind(this, 'cancel')}>
                               <i className="el-message-box__close el-icon-close" />
                             </button>
                           )
@@ -157,9 +160,10 @@ export default class MessageBox extends Component {
                   {
                     message && (
                       <div className="el-message-box__content">
-                        <div className={this.classNames('el-message-box__status', this.typeClass())}></div>
-                        <div className="el-message-box__message" style={{ marginLeft: this.typeClass() ? '50px' : '0' }}>
-                          <p>{message}</p>
+                        <div className={this.classNames('el-message-box__status', this.typeClass())} />
+                        <div className="el-message-box__message"
+                             style={{ marginLeft: this.typeClass() ? '50px' : '0' }}>
+                          <div>{message}</div>
                         </div>
                         <View show={showInput}>
                           <div className="el-message-box__input">
@@ -182,10 +186,12 @@ export default class MessageBox extends Component {
                   }
                   <div className="el-message-box__btns">
                     <View show={showCancelButton}>
-                      <Button className={cancelButtonClass} onClick={this.handleAction.bind(this, 'cancel')}>{this.cancelButtonText()}</Button>
+                      <Button className={cancelButtonClass}
+                              onClick={this.handleAction.bind(this, 'cancel')}>{this.cancelButtonText()}</Button>
                     </View>
                     <View show={showConfirmButton}>
-                      <Button className={this.classNames('el-button--primary', confirmButtonClass)} onClick={this.handleAction.bind(this, 'confirm')}>{this.confirmButtonText()}</Button>
+                      <Button className={this.classNames('el-button--primary', confirmButtonClass)}
+                              onClick={this.handleAction.bind(this, 'confirm')}>{this.confirmButtonText()}</Button>
                     </View>
                   </div>
                 </div>
@@ -211,6 +217,7 @@ MessageBox.propTypes = {
   cancelButtonText: PropTypes.string,
   cancelButtonClass: PropTypes.string,
   confirmButtonClass: PropTypes.string,
+  customClass: PropTypes.string,
   inputPlaceholder: PropTypes.string,
   inputPattern: PropTypes.regex,
   inputValidator: PropTypes.func,
@@ -223,6 +230,8 @@ MessageBox.propTypes = {
 
 MessageBox.defaultProps = {
   title: '提示',
+  showInput: false,
   showClose: true,
+  showCancelButton: false,
   showConfirmButton: true
 }

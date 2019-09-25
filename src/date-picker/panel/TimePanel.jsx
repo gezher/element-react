@@ -77,16 +77,16 @@ export default class TimePanel extends PopperBase {
 
 
   handleConfirm(isKeepPannelOpen: boolean = false) {
-    const {currentDate} = this.state
-    const {onPicked, selectableRange} = this.props
+    const { currentDate } = this.state
+    const { onPicked, selectableRange } = this.props
 
     const date = new Date(limitRange(currentDate, selectableRange, 'HH:mm:ss'));
     onPicked(date, isKeepPannelOpen)
   }
 
   render() {
-    const {isShowSeconds, currentDate } = this.state
-    const {onSelectRangeChange, selectableRange} = this.props
+    const { isShowSeconds, currentDate } = this.state
+    const { onSelectRangeChange, selectableRange } = this.props
 
     const hours = currentDate.getHours();
     const minutes = currentDate.getMinutes();
@@ -108,7 +108,7 @@ export default class TimePanel extends PopperBase {
             seconds={seconds}
             selectableRange={selectableRange}
             onSelectRangeChange={onSelectRangeChange}
-            />
+          />
         </div>
         <div className="el-time-panel__footer">
           <button

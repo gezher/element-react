@@ -26,7 +26,7 @@ export default class CollapseTransition extends React.Component <Props> {
     this.leave();
   }
 
-  componentWillReceiveProps(nextProps: any){
+  componentWillReceiveProps(nextProps: any) {
     if (this.props.isShow !== nextProps.isShow) this.triggerChange(nextProps.isShow);
   }
 
@@ -104,7 +104,7 @@ export default class CollapseTransition extends React.Component <Props> {
 
   afterLeave(): void {
     const el = this.selfRef;
-    if (!el) return ;
+    if (!el) return;
 
     el.style.display = 'none';
     el.style.height = '';
@@ -113,7 +113,7 @@ export default class CollapseTransition extends React.Component <Props> {
     el.style.paddingBottom = el.dataset.oldPaddingBottom;
   }
 
-  render(): React.Element<any> {
+  render(): React.DOM {
     return (
       <div
         className="collapse-transition"

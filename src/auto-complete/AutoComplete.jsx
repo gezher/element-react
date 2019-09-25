@@ -190,7 +190,7 @@ class AutoComplete extends Component {
     }
   }
 
-  render(): React.Element<any> {
+  render(): React.DOM {
     const { disabled, placeholder, name, size, icon, append, prepend, onIconClick, popperClass } = this.props;
     const { inputValue, suggestions } = this.state;
 

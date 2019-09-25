@@ -9,7 +9,7 @@ export default class Loading extends Component {
   }
 
   getStyle(): {
-    position: string,
+    position?: string,
     top?: number,
     right?: number,
     bottom?: number,
@@ -28,9 +28,12 @@ export default class Loading extends Component {
     } else {
       this.enableScroll();
 
-      return {
-        position: 'relative'
+      if (this.props.loading) {
+        return {
+          position: 'relative'
+        }
       }
+      return {};
     }
   }
 
@@ -52,7 +55,7 @@ export default class Loading extends Component {
     }
   }
 
-  render(): React.Element<any> {
+  render(): React.DOM {
     const { loading, fullscreen, text } = this.props;
 
     return (

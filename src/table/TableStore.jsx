@@ -10,6 +10,7 @@ import type {
   Column,
   _Column
 } from './Types';
+
 import normalizeColumns from './normalizeColumns';
 import { getLeafColumns, getValueByPath, getColumns, convertToRows, getRowIdentity } from "./utils";
 
@@ -42,10 +43,10 @@ export default class TableStore extends Component<TableStoreProps, TableStoreSta
     fit: PropTypes.bool,
     showHeader: PropTypes.bool,
     highlightCurrentRow: PropTypes.bool,
-    currentRowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number,]),
+    currentRowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.arrayOf(PropTypes.string)]),
     rowClassName: PropTypes.func,
     rowStyle: PropTypes.func,
-    rowKey: PropTypes.func,
+    rowKey: PropTypes.oneOfType([PropTypes.func, PropTypes.string,]),
     emptyText: PropTypes.string,
     defaultExpandAll: PropTypes.bool,
     expandRowKeys:PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
@@ -72,12 +73,12 @@ export default class TableStore extends Component<TableStoreProps, TableStoreSta
   };
 
   static childContextTypes = {
-    store: PropTypes.any,
+    tableStore: PropTypes.any,
   };
 
   getChildContext(): Object {
     return {
-      store: this,
+      tableStore: this,
     }
   }
 
@@ -118,18 +119,15 @@ export default class TableStore extends Component<TableStoreProps, TableStoreSta
   }
 
   componentWillReceiveProps(nextProps: TableStoreProps) {
-    // const { data } = this.props;
+    const { data } = this.props;
     const nextColumns = getColumns(nextProps);
 
     if (getColumns(this.props) !== nextColumns) {
       this.updateColumns(nextColumns);
     }
-
-    this.updateData(nextProps);
-    // if (data !== nextProps.data) {
-    //   this.updateData(nextProps);
-    // }
-
+    if (data !== nextProps.data) {
+      this.updateData(nextProps);
+    }
   }
 
   get isAllSelected(): boolean {
@@ -163,7 +161,7 @@ export default class TableStore extends Component<TableStoreProps, TableStoreSta
   //   return false;
   // }
 
-  updateColumns(columns: Array<Column>) {
+  updateColumns(columns: Array<Column | Object>) {
     let _columns = normalizeColumns(columns, tableIDSeed++);
 
     const fixedColumns = _columns.filter(column => column.fixed === true || column.fixed === 'left');
@@ -198,8 +196,8 @@ export default class TableStore extends Component<TableStoreProps, TableStoreSta
     let { hoverRow, currentRow, selectedRows, expandingRows } = this.state;
     hoverRow = hoverRow && data.includes(hoverRow) ? hoverRow : null;
     currentRow = currentRow && data.includes(currentRow) ? currentRow : null;
-
-    if (this._isMounted && data !== this.props.data && !columns[0].reserveSelection) {
+    const [firstColumn = {}] = columns;
+    if (this._isMounted && data !== this.props.data && !firstColumn.reserveSelection) {
       selectedRows = [];
     } else {
       selectedRows = selectedRows && selectedRows.filter(row => data.includes(row)) || [];
@@ -219,7 +217,6 @@ export default class TableStore extends Component<TableStoreProps, TableStoreSta
       expandingRows,
       selectedRows,
     }));
-
     if ((!this._isMounted || data !== this.props.data) && defaultSort) {
       const { prop, order = 'ascending' } = defaultSort;
       const sortColumn = columns.find(column => column.property === prop);
@@ -308,24 +305,24 @@ export default class TableStore extends Component<TableStoreProps, TableStoreSta
       return;
     }
 
-    const selectedRows = this.state.selectedRows.slice();
-    const rowIndex = selectedRows.indexOf(row);
+    this.setState(state => {
+      const selectedRows = state.selectedRows.slice();
+      const rowIndex = selectedRows.indexOf(row);
 
-    if (isSelected !== undefined) {
-      if (isSelected) {
-        rowIndex === -1 && selectedRows.push(row);
+      if (isSelected !== undefined) {
+        if (isSelected) {
+          rowIndex === -1 && selectedRows.push(row);
+        } else {
+          rowIndex !== -1 && selectedRows.splice(rowIndex, 1);
+        }
       } else {
-        rowIndex !== -1 && selectedRows.splice(rowIndex, 1);
+        rowIndex === -1 ? selectedRows.push(row) : selectedRows.splice(rowIndex, 1)
       }
-    } else {
-      rowIndex === -1 ? selectedRows.push(row) : selectedRows.splice(rowIndex, 1)
-    }
 
-    this.setState({
-      selectedRows
+      return { selectedRows };
     }, () => {
-      this.dispatchEvent('onSelect', selectedRows, row);
-      this.dispatchEvent('onSelectChange', selectedRows);
+      this.dispatchEvent('onSelect', this.state.selectedRows, row);
+      this.dispatchEvent('onSelectChange', this.state.selectedRows);
     });
   }
 
@@ -373,15 +370,12 @@ export default class TableStore extends Component<TableStoreProps, TableStoreSta
     if (Array.isArray(currentRowKey)) {
       return currentRowKey.includes(rowKey);
     }
-
     return selectedRows.includes(row);
   }
 
-  changeSortCondition(column: ?_Column, order: ?string, shouldDispatchEvent?: boolean = true) {
-    if (!column) ({ sortColumn: column, sortOrder: order } = this.state)
+  changeSortCondition(column: ?_Column, order: ?string, shouldDispatchEvent?: boolean = true) { if (!column) ({ sortColumn: column, sortOrder: order } = this.state)
 
     const data = this.state.filteredData.slice();
-
     if (!column) {
       this.setState({
         data
@@ -389,11 +383,11 @@ export default class TableStore extends Component<TableStoreProps, TableStoreSta
       return;
     }
 
-    const { sortMethod, property } = column;
+    const { sortMethod, property, sortable } = column;
     let sortedData;
-    if (!order) {
+    if (!order || sortable === 'custom') {
       sortedData = data;
-    } else {
+    } else if (sortable && sortable !== 'custom') {
       const flag = order === 'ascending' ? 1 : -1;
       if (sortMethod) {
         sortedData = data.sort((a, b) => sortMethod(a, b) ? flag : -flag);
@@ -405,14 +399,26 @@ export default class TableStore extends Component<TableStoreProps, TableStoreSta
         });
       }
     }
+    let sortSet = () => {
+      shouldDispatchEvent && this.dispatchEvent('onSortChange',
+          column && order ?
+          { column, prop: column.property, order } :
+          { column: null, prop: null, order: null }
+        )
+    }
+    if (sortable && sortable !== 'custom') {
+      this.setState({
+        sortColumn: column,
+        sortOrder: order,
+        data: sortedData,
+      },sortSet());
+    } else if (sortable && sortable === 'custom') {
+      this.setState({
+        sortColumn: column,
+        sortOrder: order,
+      },sortSet())
+    }
 
-    this.setState({
-      sortColumn: column,
-      sortOrder: order,
-      data: sortedData,
-    }, () => {
-      shouldDispatchEvent && this.dispatchEvent('onSortChange', column && order ? { column, prop: column.property, order } : { column: null, prop: null, order: null })
-    });
   }
 
   toggleFilterOpened(column: _Column) {
@@ -442,7 +448,7 @@ export default class TableStore extends Component<TableStoreProps, TableStoreSta
       <TableLayout
         {...this.props}
         renderExpanded={renderExpanded}
-        store={this.state}
+        tableStoreState={this.state}
       />
     )
   }

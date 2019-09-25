@@ -10,7 +10,7 @@ export default class Button extends Component {
     }
   }
 
-  render(): React.Element<any> {
+  render(): React.DOM {
     return (
       <button style={this.style()} className={this.className('el-button', this.props.type && `el-button--${this.props.type}`, this.props.size && `el-button--${this.props.size}`, {
           'is-disabled': this.props.disabled,

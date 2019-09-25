@@ -2,7 +2,7 @@
 import React from 'react';
 
 import { PropTypes } from '../../../libs';
-import { limitRange, parseDate } from '../utils';
+import { parseDate } from '../utils';
 import TimeSpinner from '../basic/TimeSpinner';
 import Locale from '../../locale';
 import type { TimeTypeProps, TimeRangePanelProps } from '../Types';
@@ -115,13 +115,6 @@ export default class TimeRangePanel extends PopperBase {
     const state: any = {
       [field]: ndate
     };
-
-    const { minTime, maxTime } = this.state;
-    state.minSelectableRange = [[MIN_TIME, maxTime]];
-    state.maxSelectableRange = [[minTime, MAX_TIME]];
-
-    state.minTime = limitRange(minTime, state.minSelectableRange);
-    state.maxTime = limitRange(maxTime, state.maxSelectableRange);
 
     this.setState(state);
     this.handleConfirm(true);

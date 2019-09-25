@@ -1,7 +1,7 @@
 /* @flow */
 
-import * as React from 'react';
-import throttle from 'throttle-debounce/throttle';
+import React from 'react';
+import { throttle } from 'throttle-debounce';
 import { Component, PropTypes, Transition, View } from '../../libs';
 import { addResizeListener, removeResizeListener } from '../../libs/utils/resize-event';
 
@@ -51,7 +51,7 @@ export default class Carousel extends Component {
   }
 
   componentDidMount() {
-    
+
 
     if (this.props.initialIndex < this.state.items.length && this.props.initialIndex >= 0) {
       this.setState({
@@ -64,7 +64,7 @@ export default class Carousel extends Component {
 
   componentDidUpdate(props: Object, state: State): void {
     addResizeListener(this.refs.root, this.resetItemPosition);
-    
+
     if (state.activeIndex != this.state.activeIndex) {
       this.resetItemPosition(state.activeIndex);
 
@@ -76,6 +76,7 @@ export default class Carousel extends Component {
 
   componentWillUnmount(): void {
     removeResizeListener(this.refs.root, this.resetItemPosition);
+    this.pauseTimer();
   }
 
   handleMouseEnter(): void {
@@ -215,7 +216,7 @@ export default class Carousel extends Component {
     return false;
   }
 
-  render(): React.Element<any> {
+  render(): React.DOM {
     const { height, arrow, indicatorPosition } = this.props;
     const { hover, activeIndex, items } = this.state;
     return (

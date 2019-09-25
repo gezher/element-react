@@ -95,7 +95,7 @@ export default class IframeUpload extends Component {
     this.setState({ onDrop: false });
   }
 
-  render(): React.Element<any> {
+  render(): React.DOM {
     const { drag, action, name, accept, listType } = this.props;
     const { frameName } = this.state;
     const classes = this.classNames({
@@ -110,7 +110,7 @@ export default class IframeUpload extends Component {
         onDragOver={e => this.handleDragover(e)}
         onDragLeave={e => this.handleDragleave(e)}
       >
-        <iframe onLoad={() => this.onload()} ref="iframe" name={frameName} />
+        <iframe title="_" onLoad={() => this.onload()} ref="iframe" name={frameName} />
         <form
           ref="form"
           action={action}
@@ -130,9 +130,11 @@ export default class IframeUpload extends Component {
           <span ref="data" />
         </form>
         {drag
-          ? <Cover onFile={file => this.uploadFiles(file)}>
+          ? (
+            <Cover onFile={file => this.uploadFiles(file)}>
               {this.props.children}
             </Cover>
+          )
           : this.props.children}
       </div>
     );

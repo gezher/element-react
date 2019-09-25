@@ -18,7 +18,7 @@ export default class Cover extends Component {
   handleDragover(e: SyntheticDragEvent<HTMLDivElement>): void {
     e.preventDefault();
     if(!this.props.disabled){
-      this.setState({ dragOver: true }); 
+      this.setState({ dragOver: true });
     }
   }
 
@@ -34,7 +34,7 @@ export default class Cover extends Component {
     this.props.onFile(e.dataTransfer.files);
   }
 
-  render(): React.Element<any> {
+  render(): React.DOM {
     const { dragOver } = this.state;
     return (
       <div
