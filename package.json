@@ -1,6 +1,6 @@
 {
   "name": "@yncoder/element-react",
-  "version": "1.4.34",
+  "version": "1.4.34-patch.1",
   "description": "Element UI for React",
   "private": false,
   "main": "dist/npm/es5/index.js",
@@ -19,20 +19,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yncoder/element-react.git"
+    "url": "git+https://github.com/gezher/element-react.git"
   },
   "keywords": [
     "Element",
     "UI",
-    "React",
     "React"
   ],
-  "author": "ELEME Inc, Yncoder",
+  "author": "ELEME Inc, Gezher Inc",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/yncoder/element-react/issues"
+    "url": "https://github.com/gezher/element-react/issues"
   },
-  "homepage": "https://yncoder.org/element-react",
+  "homepage": "https://elemefe.github.io/element-react/",
   "devDependencies": {
     "@types/react": "^16.8.1",
     "babel-cli": "^6.26.0",
