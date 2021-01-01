@@ -56,8 +56,8 @@ export default class BasePicker extends Component {
       className: PropTypes.string,
       format: PropTypes.string,
       isShowTrigger: PropTypes.bool,
-      isReadOnly: PropTypes.bool,
-      isDisabled: PropTypes.bool,
+      readOnly: PropTypes.bool,
+      disabled: PropTypes.bool,
       placeholder: PropTypes.string,
       onFocus: PropTypes.func,
       onBlur: PropTypes.func,
@@ -252,10 +252,10 @@ export default class BasePicker extends Component {
   }
 
   handleClickIcon() {
-    const { isReadOnly, isDisabled } = this.props
+    const { readOnly, disabled } = this.props
     const { text } = this.state
 
-    if (isReadOnly || isDisabled) return
+    if (readOnly || disabled) return
     if (!text) {
       this.togglePickerVisible()
     } else {
@@ -266,7 +266,7 @@ export default class BasePicker extends Component {
   }
 
   render() {
-    const { isReadOnly, placeholder, isDisabled, className } = this.props;
+    const { readOnly, placeholder, disabled, className } = this.props;
     const { pickerVisible, value, text, isShowClose } = this.state;
 
     const createIconSlot = () => {
@@ -277,7 +277,7 @@ export default class BasePicker extends Component {
             className={this.classNames('el-input__icon', cls)}
             onClick={this.handleClickIcon.bind(this)}
             onMouseEnter={() => {
-              if (isReadOnly || isDisabled) return
+              if (readOnly || disabled) return
               if (text) {
                 this.setState({ isShowClose: true })
               }
@@ -339,8 +339,8 @@ export default class BasePicker extends Component {
 
         <Input
           className={this.classNames(`el-date-editor el-date-editor--${this.type}`)}
-          readOnly={isReadOnly}
-          disabled={isDisabled}
+          readOnly={readOnly}
+          disabled={disabled}
           type="text"
           placeholder={placeholder}
           onFocus={this.handleFocus.bind(this)}

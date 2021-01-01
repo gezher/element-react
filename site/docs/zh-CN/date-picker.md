@@ -225,8 +225,8 @@ render() {
 | format | 时间日期格式化 | string | 年 `yyyy`，月 `MM`，日 `dd`，小时 `HH`，分 `mm`，秒 `ss` | yyyy-MM-dd |
 | align | 对齐方式 | string | left, center, right | left |
 | isShowTrigger | 是否显示图标 | boolean | - | true |
-| isReadOnly | 是否是只读 | boolean | - | false |
-| isDisabled | 是否是禁用 | boolean | - | false |
+| readOnly | 是否是只读 | boolean | - | false |
+| disabled | 是否是禁用 | boolean | - | false |
 | isShowTime | 是否显示时间 | boolean | - | false |
 | firstDayOfWeek | 周起始日 | Number | 0 到 6 | 0 |
 | onFocus | focus 事件触发 | (SyntheticEvent)=>() | - | - |
