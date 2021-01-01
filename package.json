@@ -1,6 +1,6 @@
 {
   "name": "@yncoder/element-react",
-  "version": "1.4.34-patch.3",
+  "version": "1.4.34-patch.4",
   "description": "Element UI for React",
   "private": false,
   "main": "dist/npm/es5/index.js",
