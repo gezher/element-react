@@ -160,8 +160,8 @@ render() {
 | align | alignment | string | left, center, right | left |
 | placeholder | placeholder | string | — | — |
 | isShowTrigger | whether DatePicker show trigger | bool | - | - |
-| isReadOnly | whether DatePicker is read only | boolean | — | false |
-| isDisabled | whether DatePicker is disabled | boolean | — | false |
+| readOnly | whether DatePicker is read only | boolean | — | false |
+| disabled | whether DatePicker is disabled | boolean | — | false |
 | onFocus | onFocus | func:(TimeSelectReactComponent)=>() | — | - |
 | onBlur | onBlur | func:(TimeSelectReactComponent)=>() | — | - |
 | onChange | onChange | func:(value)=>{} | — | - |

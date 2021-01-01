@@ -225,8 +225,8 @@ render() {
 | format | - | string | 年 `yyyy`，月 `MM`，日 `dd`，小时 `HH`，分 `mm`，秒 `ss` | yyyy-MM-dd |
 | align | - | string | left, center, right | left |
 | isShowTrigger | whether to show trigger icon | boolean | - | true |
-| isReadOnly | - | boolean | - | false |
-| isDisabled | - | boolean | - | false |
+| readOnly | - | boolean | - | false |
+| disabled | - | boolean | - | false |
 | isShowTime | show time or not | boolean | - | false |
 | firstDayOfWeek | first day of week | Number | 0 to 6 | 0 |
 | onFocus | - | (SyntheticEvent)=>() | - | - |

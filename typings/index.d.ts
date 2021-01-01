@@ -978,8 +978,8 @@ declare namespace ElementReactLibs {
     align?: 'left' | 'center' | 'right'
     format?: string
     isShowTrigger?: boolean
-    isReadOnly?: boolean
-    isDisabled?: boolean
+    readOnly?: boolean
+    disabled?: boolean
     placeholder?: string
     onFocus?(self?: any): void
     onBlur?(self?: any): void

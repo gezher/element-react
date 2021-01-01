@@ -157,8 +157,8 @@ render() {
 | align | 对齐方式 | string | left, center, right | left |
 | placeholder | 占位内容 | string | — | — |
 | isShowTrigger | 是否显示图标 | bool | - | - |
-| isReadOnly | 只读 | boolean | — | false |
-| isDisabled | 是否禁用 | boolean | — | false |
+| readOnly | 只读 | boolean | — | false |
+| disabled | 是否禁用 | boolean | — | false |
 | onFocus | onFocus | func:(TimeSelectReactComponent)=>() | — | - |
 | onBlur | onBlur | func:(TimeSelectReactComponent)=>() | — | - |
 | onChange | onChange | func:(value)=>() | — | - |

@@ -83,11 +83,11 @@ describe('TimePicker test', function () {
     expect(w.find('i.el-input__icon').exists()).toBe(false)
   })
 
-  it('isDisabled should work', ()=>{
+  it('disabled should work', ()=>{
     let w = mount(
       <TimeSelect
         {...minProps}
-        isDisabled={true}
+        disabled={true}
       />
     )
     expect(w.find('input').props().disabled).toBe(true)
